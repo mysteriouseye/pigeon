@@ -1,11 +1,17 @@
 #include "execOrder.h"
 #include <stdio.h>
+#include <iostream>
 
+using std::cout;
+using std::endl;
 
 void execOrders(const Message & order, Port & udpPort, UserTable & userTable){
     const std::vector<char> & message = order.content;
     const std::string IP = inet_ntoa(order.socket.sin_addr);
     const unsigned short port = ntohs(order.socket.sin_port);
+
+    cout<<"Got message from IP: "<<IP<<" Port: "<<port<<endl;
+
     UserInfo newUser;
     std::string abcd[4];
     for(int i=0,j=0;i<IP.size();i++){
@@ -31,6 +37,7 @@ void execOrders(const Message & order, Port & udpPort, UserTable & userTable){
     switch(message[0]){     //message[0] represents what service the client wants
         case '1':
             //get fingerPrint
+            cout<<"Sign In request, user ID:"<<newUser.ID<<";"<<endl;
             for(int i=0;i<32;i++)
                 newUser.fingerPrint[i]=message[i+4+32];
             //set Address
@@ -40,13 +47,18 @@ void execOrders(const Message & order, Port & udpPort, UserTable & userTable){
             newUser.address[5]=port/(unsigned short)256;
             newUser.isOnline==true;
             retMessage[0]='1';
-            if(userTable.addUser(newUser)==true)
+            if(userTable.addUser(newUser)==true){
                 strcpy(&retMessage[4],"Success!");
-            else
+                cout<<"Successed! Now we have a new user!"<<endl;
+            }
+            else{
                 strcpy(&retMessage[4],"User already exist!");
+                cout<<"Permision denied, because we already have this user!"<<endl;
+            }
             udpPort.sendMessage(retMessage,IP,port);
             break;
         case '2':
+            cout<<"Login request, user ID:"<<newUser.ID<<";"<<endl;
             for(int i=0;i<32;i++)
                 newUser.fingerPrint[i]=message[i+4+32];
             for(int i=0;i<4;i++)
@@ -54,25 +66,35 @@ void execOrders(const Message & order, Port & udpPort, UserTable & userTable){
             newUser.address[4]=port%(unsigned short)256;
             newUser.address[5]=port/(unsigned short)256;
             retMessage[0]='2';
-            if(userTable.changeUserAddress(newUser.ID,newUser.fingerPrint,newUser.address)==true)
+            if(userTable.changeUserAddress(newUser.ID,newUser.fingerPrint,newUser.address)==true){
                 strcpy(&retMessage[4],"Success!");
-            else
+                cout<<"Successed!"<<endl;
+            }
+            else{
                 strcpy(&retMessage[4],"PassWord Error or No such Account!");
+                cout<<"Permision denied, PassWord Error or No such Account!"<<endl;
+            }
             udpPort.sendMessage(retMessage,IP,port);
             break;
         case '3':
+            cout<<"Change finger print request, user ID:"<<newUser.ID<<";"<<endl;
             for(int i=0;i<32;i++)
                 newUser.fingerPrint[i]=message[i+4+32];
             for(int i=0;i<32;i++)
                 newFingerPrint[i]=message[i+4+32+32];
             retMessage[0]='3';
-            if(userTable.setFingerPrint(newUser.ID,newUser.fingerPrint,newFingerPrint)==true)
+            if(userTable.setFingerPrint(newUser.ID,newUser.fingerPrint,newFingerPrint)==true){
                 strcpy(&retMessage[4],"Success!");
-            else
+                cout<<"Successed!"<<endl;
+            }
+            else{
                 strcpy(&retMessage[4],"PassWord Error or No such Account!");
+                cout<<"Permision denied, PassWord Error or No such Account!"<<endl;
+            }
             udpPort.sendMessage(retMessage,IP,port);
             break;
-        case '4':
+        case '4':   //well, we still reply to it
+            cout<<"Log out request, user ID:"<<newUser.ID<<";"<<endl;
             retMessage[0]='4';
             if(userTable.userOffLine(newUser.ID)==true)
                 strcpy(&retMessage[4],"Success!");
@@ -81,6 +103,7 @@ void execOrders(const Message & order, Port & udpPort, UserTable & userTable){
             udpPort.sendMessage(retMessage,IP,port);
             break;
         case '5':
+            cout<<"Request for "<<newUser.ID<<" \'s address"<<endl;
             retMessage[0]='5';
             newUser=userTable.getUserbyId(newUser.ID);
             if(newUser.ID[0]=='\0')
@@ -110,6 +133,7 @@ void execOrders(const Message & order, Port & udpPort, UserTable & userTable){
             break;
         default:
             udpPort.sendMessage(retMessage,IP,port);
+            cout<<"Invalid request, Ignored."<<endl;
     }
     return;
     //execOrder done!

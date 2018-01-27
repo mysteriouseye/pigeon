@@ -2,7 +2,7 @@
 
 **An open-source and distributed communicate system**
 
-## Why we need such software
+##Why we need such software
 
 The Internet is no more a free place where you can easily hide yourself. The old brother is looking at you!
 
@@ -14,7 +14,7 @@ Just install this software on your server, you can make contribution to our caus
 
 
 
-## Client Requests should be sent in the following format 
+##Client Requests should be sent in the following format 
 
 #### Over all
 

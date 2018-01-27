@@ -37,7 +37,11 @@ Message Port::getMessage(){
     memset(buffer,0,sizeof(buffer));
     Message toReturn;
     int len=sizeof(SOCKADDR);
-    recvfrom(udpSocket,buffer,sizeof(buffer),0,(SOCKADDR *  )&toReturn.socket,&len);
+    int dataSize = recvfrom(udpSocket,buffer,sizeof(buffer),0,(SOCKADDR *  )&toReturn.socket,&len);
+    if(dataSize!=4096){
+        memset(buffer,0,sizeof(buffer));
+        std::cout<<dataSize<<std::endl;
+    }
     for(int i=0;i<4096;i++)
         toReturn.content.push_back(buffer[i]);
     return toReturn;
@@ -46,8 +50,10 @@ Message Port::getMessage(){
 bool Port::sendMessage(const std::string & content, const std::string & ip, const unsigned short port){
     char buffer[4096];
     memset(buffer,0,sizeof(buffer));
-    strcpy(buffer,content.c_str());
+    for(int i=0;i<4096;i++)
+        buffer[i]=content[i];
     SOCKADDR_IN targetAddr;
+    targetAddr.sin_family=AF_INET;
     targetAddr.sin_addr.S_un.S_addr=inet_addr(ip.c_str());
     targetAddr.sin_port=htons(port);
     sendto(udpSocket,buffer,sizeof(buffer),0,(SOCKADDR *)& targetAddr,sizeof(SOCKADDR));
