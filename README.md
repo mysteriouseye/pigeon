@@ -4,7 +4,7 @@
 
 **中文版 请参阅同目录下“读我.md”**
 
-##Why we need such software
+## Why we need such software
 
 The Internet is no more a free place where you can easily hide yourself. The big brother is watching you!
 
@@ -16,7 +16,7 @@ Just install this software on your server, you can make contribution to our caus
 
 
 
-##Client Requests should be sent in the following format 
+## Client Requests should be sent in the following format 
 
 #### Over all
 
