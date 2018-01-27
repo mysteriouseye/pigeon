@@ -2,9 +2,11 @@
 
 **An open-source and distributed communicate system**
 
+**中文版 请参阅同目录下“读我.md”**
+
 ##Why we need such software
 
-The Internet is no more a free place where you can easily hide yourself. The old brother is looking at you!
+The Internet is no more a free place where you can easily hide yourself. The big brother is watching you!
 
 We urgently need a way to communicate anonymously.
 
@@ -18,7 +20,7 @@ Just install this software on your server, you can make contribution to our caus
 
 #### Over all
 
-Client shall sent messages less than 4096 Bytes.
+Client shall sent messages of 4096 Bytes.
 
 A message shall start with an ASCII char representing the service it wants to use. For example, if you want to sign in , you should make the very Byte '1'.
 
@@ -34,7 +36,7 @@ For example , If you want to create an account. You should just sent:
 
 The server's reply also begins with the char '1' and 3 bytes of '\0' and follows a brief char[]. If the char[] is "Success!\0", It means success. Else, it will tell you where is wrong.
 
-For undefined circumstances, it will simply return 4096 Bytes of '\0'.  
+For undefined circumstances, it will simply return 4096 Bytes of '\0'.  Or will not reply at all if the message length is not 4096.
 
 #### 1. Sign in
 
