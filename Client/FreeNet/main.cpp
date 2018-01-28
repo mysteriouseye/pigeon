@@ -1,16 +1,17 @@
-
+#include "SignIn.h"
 
 #include <QApplication>
-#include <QWidget>
-#include <QLabel>
+
+char ID[32];
+char fingerPrint[32];
 
 
 int main(int argc, char *argv[])
 {
     QApplication application(argc, argv);
-    QWidget box;
-    QLabel line("HelloWorld");
-    line.setParent(& box);
-    box.show();
-    return application.exec();
+    SignIn signIn;
+    int result = signIn.exec();
+    qDebug()<<result;
+    application.exec();
+    return 0;
 }

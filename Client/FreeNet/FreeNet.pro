@@ -24,9 +24,11 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
-        main.cpp
+        main.cpp \
+    SignIn.cpp
 
-HEADERS +=
+HEADERS += \
+    SignIn.h
 
 DISTFILES += \
     README.md
