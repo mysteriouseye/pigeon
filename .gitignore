@@ -2,3 +2,4 @@
 *.exe
 *.user
 Client/build*/
+*/.vscode/
