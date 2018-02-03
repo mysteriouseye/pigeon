@@ -25,10 +25,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-    SignIn.cpp
+    signIn.cpp \
+    md5.cpp \
+    dialogManager.cpp
 
 HEADERS += \
-    SignIn.h
+    globalViables.h \
+    signIn.h \
+    md5.h \
+    dialogManager.h
 
 DISTFILES += \
     README.md

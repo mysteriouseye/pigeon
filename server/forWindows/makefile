@@ -1,5 +1,5 @@
 run : server.exe
-	./server.exe 5050
+	./server.exe 12345
 
 server.exe : main.o execOrder.o network.o userTable.o
 	g++ main.o execOrder.o network.o userTable.o -lwsock32 -o server.exe

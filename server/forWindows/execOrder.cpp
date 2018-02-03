@@ -37,7 +37,7 @@ void execOrders(const Message & order, Port & udpPort, UserTable & userTable){
     switch(message[0]){     //message[0] represents what service the client wants
         case '1':
             //get fingerPrint
-            cout<<"Sign In request, user ID:"<<newUser.ID<<";"<<endl;
+            cout<<"Register request, user ID:"<<newUser.ID<<";"<<endl;
             for(int i=0;i<32;i++)
                 newUser.fingerPrint[i]=message[i+4+32];
             //set Address
@@ -58,7 +58,7 @@ void execOrders(const Message & order, Port & udpPort, UserTable & userTable){
             udpPort.sendMessage(retMessage,IP,port);
             break;
         case '2':
-            cout<<"Login request, user ID:"<<newUser.ID<<";"<<endl;
+            cout<<"Sign in request, user ID:"<<newUser.ID<<";"<<endl;
             for(int i=0;i<32;i++)
                 newUser.fingerPrint[i]=message[i+4+32];
             for(int i=0;i<4;i++)
@@ -94,7 +94,7 @@ void execOrders(const Message & order, Port & udpPort, UserTable & userTable){
             udpPort.sendMessage(retMessage,IP,port);
             break;
         case '4':   //well, we still reply to it
-            cout<<"Log out request, user ID:"<<newUser.ID<<";"<<endl;
+            cout<<"Sign out request, user ID:"<<newUser.ID<<";"<<endl;
             retMessage[0]='4';
             if(userTable.userOffLine(newUser.ID)==true)
                 strcpy(&retMessage[4],"Success!");

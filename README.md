@@ -38,13 +38,13 @@ The server's reply also begins with the char '1' and 3 bytes of '\0' and follows
 
 For undefined circumstances, it will simply return 4096 Bytes of '\0'.  Or will not reply at all if the message length is not 4096.
 
-#### 1. Sign in
+#### 1. Register
 
 '1'for the first byte, then come 3 bytes of '\0', and 32 bytes as your ID(Of course, few people use IDs as long as 32Bytes, so you can just use '\0' to make it short), then comes your finger print(the MD5_32 of your password). And the rest of 4096 bytes shall be filled with '\0'.
 
 The server's reply also begins with the char '1' and 3 bytes of '\0' and follows a brief char[]. If the char[] is "Success!\0", It means success. Else, it will tell you where is wrong.
 
-#### 2.Login 
+#### 2.Sign in 
 
 '2'for the first byte, then come 3 bytes of '\0', and 32 bytes as your ID(Of course, few people use IDs as long as 32Bytes, so you can just use '\0' to make it short), then comes your finger print(the MD5_32 of your password). And the rest of 4096 bytes shall be filled with '\0'.
 
@@ -56,7 +56,7 @@ The server's reply also begins with the char '2' and 3 bytes of '\0' and follows
 
 The server's reply also begins with the char '3' and 3 bytes of '\0' and follows a brief char[]. If the char[] is "Success!\0", It means success. Else, it will tell you where is wrong.
 
-#### 4.Log out
+#### 4.Sign out
 
 '4'for the first byte, then come 3 bytes of '\0', and 32 bytes as your ID(Of course, few people use IDs as long as 32Bytes, so you can just use '\0' to make it short), then comes your finger print(the MD5_32 of your password). And the rest of 4096 bytes shall be filled with '\0'.
 
@@ -80,9 +80,41 @@ Erasing a account is meaningless.
 
 #### 
 
-#### 
+## Messages between clients should be sent in the following format
 
+#### Over all
 
+The length of messages shall be as long as 4096 Bytes
+
+Message shall start with 2 '\0' to differ from messages sent from and to servers
+
+Then come 1 byte representing what the message is for
+
+Then come 1 byte of '\0', this byte is reserved
+
+#### 1.Send a message(A user send a message to another)
+
+The message should start with '\0', '\0', '1','\0'
+
+Then come 32 bytes of sender's user ID
+
+Then come 4 bytes of random numbers to differ each message
+
+Then the rest of 4096 bytes are used to carry information. (We suggest that if a message is too long (longer than 4056 bytes), you can divide it into 2 messages)
+
+#### 2. Receive a message(Receiving a message from another user)
+
+After receiving a message, the receiver's client should the sender's client that message have been received successfully.
+
+So it should also reply.
+
+The reply should start with '\0','\0','\2','\0'
+
+ Then come 32 bytes of receiver's user ID
+
+Then come 4 bytes of random numbers from the message that has just received
+
+The rest of 4096 bytes should be filled with '\0'
 
 
 

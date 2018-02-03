@@ -11,21 +11,25 @@
 #include <QLineEdit>
 #include <QPushButton>
 
+#include "globalViables.h"
+
 class SignIn: public QDialog
 {
 public:
     SignIn();
     ~SignIn();
-    void OK(){done(1);}
+    void OK();
 private:
     QLabel userID;
     QLabel password;
     QLineEdit inputID;
     QLineEdit inputPassword;
     QPushButton confirm;
-    QPushButton login;
+    QPushButton userRegister;
     QVBoxLayout vLayout;
     QGridLayout gLayout;
+    void signInReplyed();
+    void success();
 };
 
 
