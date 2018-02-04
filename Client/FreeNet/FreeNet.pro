@@ -27,13 +27,15 @@ SOURCES += \
         main.cpp \
     signIn.cpp \
     md5.cpp \
-    dialogManager.cpp
+    dialogManager.cpp \
+    userRegister.cpp
 
 HEADERS += \
     globalViables.h \
     signIn.h \
     md5.h \
-    dialogManager.h
+    dialogManager.h \
+    userRegister.h
 
 DISTFILES += \
     README.md

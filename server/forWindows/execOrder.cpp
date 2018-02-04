@@ -48,8 +48,8 @@ void execOrders(const Message & order, Port & udpPort, UserTable & userTable){
             newUser.isOnline==true;
             retMessage[0]='1';
             if(userTable.addUser(newUser)==true){
-                strcpy(&retMessage[4],"Success!");
-                cout<<"Successed! Now we have a new user!"<<endl;
+                strcpy(&retMessage[4],"Succeed!");
+                cout<<"Succeed! Now we have a new user!"<<endl;
             }
             else{
                 strcpy(&retMessage[4],"User already exist!");
@@ -67,12 +67,12 @@ void execOrders(const Message & order, Port & udpPort, UserTable & userTable){
             newUser.address[5]=port/(unsigned short)256;
             retMessage[0]='2';
             if(userTable.changeUserAddress(newUser.ID,newUser.fingerPrint,newUser.address)==true){
-                strcpy(&retMessage[4],"Success!");
-                cout<<"Successed!"<<endl;
+                strcpy(&retMessage[4],"Succeed!");
+                cout<<"Succeed!"<<endl;
             }
             else{
-                strcpy(&retMessage[4],"PassWord Error or No such Account!");
-                cout<<"Permision denied, PassWord Error or No such Account!"<<endl;
+                strcpy(&retMessage[4],"Password Error or No such Account!");
+                cout<<"Permision denied, Password Error or No such Account!"<<endl;
             }
             udpPort.sendMessage(retMessage,IP,port);
             break;
@@ -84,12 +84,12 @@ void execOrders(const Message & order, Port & udpPort, UserTable & userTable){
                 newFingerPrint[i]=message[i+4+32+32];
             retMessage[0]='3';
             if(userTable.setFingerPrint(newUser.ID,newUser.fingerPrint,newFingerPrint)==true){
-                strcpy(&retMessage[4],"Success!");
+                strcpy(&retMessage[4],"Succeed!");
                 cout<<"Successed!"<<endl;
             }
             else{
-                strcpy(&retMessage[4],"PassWord Error or No such Account!");
-                cout<<"Permision denied, PassWord Error or No such Account!"<<endl;
+                strcpy(&retMessage[4],"Password Error or No such Account!");
+                cout<<"Permision denied, Password Error or No such Account!"<<endl;
             }
             udpPort.sendMessage(retMessage,IP,port);
             break;
@@ -97,9 +97,9 @@ void execOrders(const Message & order, Port & udpPort, UserTable & userTable){
             cout<<"Sign out request, user ID:"<<newUser.ID<<";"<<endl;
             retMessage[0]='4';
             if(userTable.userOffLine(newUser.ID)==true)
-                strcpy(&retMessage[4],"Success!");
+                strcpy(&retMessage[4],"Succeed!");
             else
-                strcpy(&retMessage[4],"PassWord Error or No such Account!");
+                strcpy(&retMessage[4],"Password Error or No such Account!");
             udpPort.sendMessage(retMessage,IP,port);
             break;
         case '5':

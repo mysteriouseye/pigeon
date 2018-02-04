@@ -10,8 +10,12 @@
 #include <QDialog>
 #include <QLineEdit>
 #include <QPushButton>
+#include <QMessageBox>
 
 #include "globalViables.h"
+#include "userRegister.h"
+
+bool strcmp(const char * str_1, const char * str_2, uint64_t maxsize);
 
 class SignIn: public QDialog
 {
@@ -28,8 +32,13 @@ private:
     QPushButton userRegister;
     QVBoxLayout vLayout;
     QGridLayout gLayout;
+    QMessageBox wait;
+
+    UserRegister registerInterface;
+
     void signInReplyed();
     void success();
+    void openRegisterInterface();
 };
 
 
